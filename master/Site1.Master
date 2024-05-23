@@ -1,0 +1,148 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="master.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>Solar System</title>
+    <style>
+        body {
+            width: auto;
+            background-color: #AAF9A6;
+            direction: ltr;
+            font-family: Arial, sans-serif;
+        }
+        .mpTable {
+            width: 100%;
+            border: 1px solid silver;
+            text-align: center;
+        }
+        .mpHeader {
+            width: 100%;
+            border: 1px solid silver;
+            text-align: center;
+            height: 40px;
+        }
+        .mpMenu {
+            width: 100%;
+            border: 1px solid silver;
+            text-align: center;
+            height: 40px;
+        }
+        .mpMainPage {
+            border: 1px solid silver;
+            height: 400px;
+            text-align: center;
+        }
+        .mpH1 {
+            color: #2a7bd7;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .clock {
+            text-align: center;
+            color: #3c8bed;
+        }
+        .mpMenu a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .mpMenu a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .nav-link {
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .nav-link a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .nav-link a:hover {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+
+    <script>
+        setInterval("myTimer()", 1000);
+
+        function myTimer() {
+            var d = new Date();
+            var t1 = d.toLocaleDateString(); // date
+            var t2 = d.toLocaleTimeString(); // time
+            var t = t1 + "<br />" + t2;
+            document.getElementById("myclock").innerHTML = t;
+        }
+    </script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <table class="mpTable">
+        <tr class="mpHeader">
+            <td style="width:20%; text-align:center;"><%=loginMsg %></td>
+            <td style="width:60%;">
+                <h1 class="mpH1" id="top1">My List of planets</h1>
+            </td>
+            <td style="width:20%;" id="myclock"></td>
+        </tr>
+
+        <tr>
+            <td class="mpMenu" colspan="3">
+                <% if (Session["uName"].ToString() == "Guest") { %>
+                    <a href="Beginning.aspx">Solar System</a>
+                    <% if (Session["admin"].ToString() != "yes") { %>
+                        <a href="LoginAdmin.aspx">Admin login</a>
+                    <% } %>
+                <% } else { %>
+                    <a href="SolarSystem.aspx">Solar System</a>
+                <% } %>
+                <a href="Schedual.aspx">Schedual</a>
+                <% if (Session["uName"].ToString() != "Guest" || Session["admin"].ToString() == "yes") { %>
+                    <a href="SolarSystem.aspx">Solar System</a>
+                    <a href="Sun.aspx">Sun</a>
+                    <a href="Mercury.aspx">Mercury</a>
+                    <a href="Venus.aspx">Venus</a>
+                    <a href="Mars.aspx">Mars</a>
+                    <a href="Jupiter.aspx">Jupiter</a>
+                    <a href="Saturn.aspx">Saturn</a>
+                    <a href="Uranus.aspx">Uranus</a>
+                    <a href="Neptune.aspx">Neptune</a>
+                <% } %>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="mpMainPage" colspan="3">
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
+            </td>
+        </tr>
+        <tr class="mpMenu">
+            <td style="width:20%;"></td>
+            <td style="width:60%; text-align:center;">
+                <a href="mailto:noamalin3@gmail.com">Built by Noam Bocal. Press to contact</a>
+            </td>
+            <td style="width:20%; text-align:center;">
+                Your are visitor number:
+                <%=Application["counter"] %>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
